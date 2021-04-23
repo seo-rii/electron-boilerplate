@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "ESNext",
+        "jsx": "react",
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "outDir": "./build",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true
+    },
+    "exclude": ["node_modules", "frontend"]
+}
