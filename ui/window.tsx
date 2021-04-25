@@ -1,13 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import * as CSS from 'csstype'
-
-declare global {
-    interface Window {
-        context: any
-        windowId: string
-    }
-}
+import { getTheme } from './util'
 
 function TitleBarButton(props: {
     icon: string
@@ -50,13 +44,14 @@ function TitleBarButton(props: {
 
 export function TitleBar(props: { title: string }) {
     const [isMaxmized, setMaxmized] = useState(false)
+    const [theme, setTheme] = useState('')
     useEffect(() => {
-        window.context.receive(
-            'winMaximizeStatChange',
-            (maximized: boolean) => {
-                setMaxmized(maximized)
-            }
-        )
+        window.context.on('winMaximizeStatChange', (maximized: boolean) => {
+            setMaxmized(maximized)
+        })
+        getTheme().then((currentTheme) => {
+            setTheme(currentTheme)
+        })
     }, [])
     return (
         <header
@@ -67,6 +62,7 @@ export function TitleBar(props: { title: string }) {
                 zIndex: 9999,
                 width: '100%',
                 top: 0,
+                color: theme === 'dark' ? '#ffffff' : '#000000',
             }}>
             <div
                 style={

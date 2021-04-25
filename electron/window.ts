@@ -1,4 +1,5 @@
 import { ipcMain, BrowserWindow } from 'electron'
+import { getTheme } from './theme'
 
 export function initWindowIpcHandler(
     win: BrowserWindow,
@@ -12,6 +13,11 @@ export function initWindowIpcHandler(
     })
     ipcMain.on('unmaximize', (e, windowId: string) => {
         if (windowId === currentWindowId) win.unmaximize()
+    })
+
+    ipcMain.on('theme', (e, windowId: string) => {
+        if (windowId === currentWindowId)
+            win.webContents.send('theme', getTheme())
     })
 
     win.on('maximize', () => {

@@ -1,16 +1,24 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
+let validSendChannels = ['minimize', 'maximize', 'unmaximize', 'theme']
+let validReceiveChannels = ['winMaximizeStatChange', 'theme']
+
 contextBridge.exposeInMainWorld('context', {
     send: (channel: string, data: any) => {
-        let validChannels = ['minimize', 'maximize', 'unmaximize']
-        if (validChannels.includes(channel)) {
+        if (validSendChannels.includes(channel)) {
             ipcRenderer.send(channel, data)
         }
     },
-    receive: (channel: string, func: any) => {
-        let validChannels = ['winMaximizeStatChange']
-        if (validChannels.includes(channel)) {
+    on: (channel: string, func: any) => {
+        if (validReceiveChannels.includes(channel)) {
             ipcRenderer.on(channel, (event: Event, ...args: any) =>
+                func(...args)
+            )
+        }
+    },
+    once: (channel: string, func: any) => {
+        if (validReceiveChannels.includes(channel)) {
+            ipcRenderer.once(channel, (event: Event, ...args: any) =>
                 func(...args)
             )
         }

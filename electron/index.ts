@@ -3,6 +3,7 @@ import { BrowserWindow } from 'electron-acrylic-window'
 import path from 'path'
 import { initWindowIpcHandler } from './window'
 import { v4 as uuid } from 'uuid'
+import { getTheme } from './theme'
 
 let win: BrowserWindow
 
@@ -11,10 +12,10 @@ function createWindow() {
         width: 800,
         height: 600,
         frame: false,
-        vibrancy: 'light',
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
         },
+        vibrancy: getTheme(),
     })
 
     let windowId = uuid()
