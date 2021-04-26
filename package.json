@@ -1,7 +1,7 @@
 {
-    "name": "dailyspeed",
+    "name": "electron-boilerplate",
     "version": "0.0.1",
-    "description": "인터넷 속도 측정 자동화 프로그램",
+    "description": "Boilerplate for Electron + React",
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
         "*.{js,jsx,ts,tsx,json,md}": "prettier --write"
